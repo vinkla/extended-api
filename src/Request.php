@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Extended\API;
 
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Translation\ArrayLoader;
+use Illuminate\Support\Collection;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Validator;
@@ -25,9 +25,9 @@ final class Request extends WP_REST_Request
     }
 
     /** Get data from the request as collection. */
-    public function collect(string $key, $default = null)
+    public function collect(string $key, $default = null): Collection
     {
-        return collect($this->input($key, $default));
+        return new Collection($this->input($key, $default));
     }
 
     /** Get the input from the request. */
