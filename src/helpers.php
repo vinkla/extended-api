@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Extended\API\Request;
 use Extended\API\Response;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,10 +16,10 @@ if (!function_exists('abort')) {
     function abort($code, $message = '', array $headers = [])
     {
         if ($code == 404) {
-            throw new NotFoundHttpException($message, null, 0, $headers);
+            throw new NotFoundHttpException(message: $message, headers: $headers);
         }
 
-        throw new HttpException($code, $message, null, $headers);
+        throw new HttpException(statusCode: $code, message: $message, headers: $headers);
     }
 }
 
@@ -32,6 +33,8 @@ if (!function_exists('register_extended_rest_route')) {
                 return $callback(
                     Request::fromWordPressRestRequest($request)
                 );
+            } catch (ValidationException $exception) {
+                return response($exception);
             } catch (HttpException $exception) {
                 return response($exception);
             }
@@ -47,6 +50,15 @@ if (!function_exists('response')) {
         int $status = 200,
         array $headers = []
     ): Response {
+        if ($data instanceof ValidationException) {
+            $firstMessage = $data->validator->errors()->first();
+
+            return new Response(
+                ['message' => $firstMessage],
+                $data->status,
+            );
+        }
+
         if ($data instanceof HttpException) {
             return new Response(
                 ['message' => $data->getMessage()],
