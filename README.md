@@ -23,19 +23,22 @@ class ContactController
       'email' => 'required|email',
     ]);
 
+    // Implemented
     $request->input('name'); // Get the input value.
     $request->integer('name'); // Get the input value as integer.
-    $request->float('name'); // Get the input value as float.
     $request->boolean('name'); // Get the input value as boolean.
+    $request->has('name'); // Check if input exists.
+    $request->collect('items'); // Get input as collection.
+    $request->user(); // Get the current user.
+    
+    // Planned to be implemented
+    $request->float('name'); // Get the input value as float.
     $request->all(); // Get all input values.
     $request->only(['name']); // Get only specific input values.
     $request->except(['name']); // Get all input values except specific ones.
-    $request->has('name'); // Check if input exists.
     $request->filled('name'); // Check if input is filled.
     $request->missing('name'); // Check if input is missing.
-    $request->collect(); // Get input as collection.
     $request->query(); // Get input from the query string.
-    $request->user(); // Get the current user.
     $request->dd(); // Dump and die.
     $request->dump(); // Dump.
 
