@@ -1,3 +1,11 @@
+# Extended API
+
+A WordPress package that extends the REST API with request and response objects, making it more enjoyable to work with. This is still a work in progress and may not be completed yet.
+
+## Usage
+
+Below is an example of how to use this package and its methods.
+
 ```php
 namespace App\Http;
 
@@ -40,12 +48,18 @@ class ContactController
     return response($request->only('name', 'email'));
   }
 }
+```
 
+To register the controller, you can use the following code.
+
+```php
 register_extended_rest_request('acme', 'contacts', [
   'callback' => App\Http\ContactController::class,
   'permission_callback' => '__return_true',
-])
+]);
 ```
+
+If you want to enable better error messages in development, you can use the following code.
 
 ```php
 add_filter('wp_php_error_message', function ($message, $error): string {
