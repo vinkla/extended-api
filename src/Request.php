@@ -19,7 +19,7 @@ final class Request extends WP_REST_Request
     {
         return filter_var(
             $this->input($key, $default),
-            FILTER_VALIDATE_BOOLEAN
+            FILTER_VALIDATE_BOOLEAN,
         );
     }
 
@@ -67,12 +67,12 @@ final class Request extends WP_REST_Request
 
     /** Create a new request from a WP_REST_Request instance. */
     public static function fromWordPressRestRequest(
-        WP_REST_Request $restRequest
+        WP_REST_Request $restRequest,
     ): self {
         $request = new self(
             $restRequest->get_method(),
             $restRequest->get_route(),
-            $restRequest->get_attributes()
+            $restRequest->get_attributes(),
         );
 
         foreach ($restRequest->get_params() as $key => $value) {

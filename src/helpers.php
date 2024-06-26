@@ -31,7 +31,7 @@ if (!function_exists('register_extended_rest_route')) {
         $args['callback'] = function (WP_REST_Request $request) use ($callback) {
             try {
                 return $callback(
-                    Request::fromWordPressRestRequest($request)
+                    Request::fromWordPressRestRequest($request),
                 );
             } catch (ValidationException $exception) {
                 return response($exception);
@@ -48,7 +48,7 @@ if (!function_exists('response')) {
     function response(
         mixed $data = [],
         int $status = 200,
-        array $headers = []
+        array $headers = [],
     ): Response {
         if ($data instanceof ValidationException) {
             $firstMessage = $data->validator->errors()->first();
@@ -63,7 +63,7 @@ if (!function_exists('response')) {
             return new Response(
                 ['message' => $data->getMessage()],
                 $data->getStatusCode(),
-                $data->getHeaders()
+                $data->getHeaders(),
             );
         }
 
