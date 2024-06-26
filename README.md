@@ -31,6 +31,9 @@ class ContactController
     $request->dd(); // Dump and die.
     $request->dump(); // Dump.
 
+    // Return a response.
+    abort(404);
+
     // All HTTP exception are caught and returned as JSON.
     throw new BadRequestException('Invalid request');
 
