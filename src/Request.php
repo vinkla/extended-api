@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Validator;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use WP_REST_Request;
 use WP_User;
 
@@ -48,19 +47,12 @@ final class Request extends WP_REST_Request
         return $this->has_param($key);
     }
 
-    /**
-     * Get the current user making the request.
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     */
-    public function user(): WP_User
+    /** Get the current user making the request. */
+    public function user(): WP_User|null
     {
         $user = wp_get_current_user();
 
-        if ($user?->ID === 0) {
-            throw new HttpException(statusCode: 403, message: 'Forbidden');
-        }
-
-        return $user;
+        return $user?->ID !== 0 ? $user : null;
     }
 
     /** Validate the request attributes. */
