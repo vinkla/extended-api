@@ -1,6 +1,6 @@
 # Extended API
 
-A WordPress package that extends the REST API with request and response objects, making it more enjoyable to work with. This is still a work in progress and may not be completed yet.
+> Enhancing the WordPress REST API with advanced request and response objects. Work in progress.
 
 ## Usage
 
