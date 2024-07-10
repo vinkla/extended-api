@@ -1,6 +1,9 @@
 # Extended API
 
-> Enhancing the WordPress REST API with advanced request and response objects. Work in progress.
+> Enhancing the WordPress REST API with advanced request and response objects.
+
+> [!WARNING]  
+> This work is in progress and has not yet been published on Packagist. It may or may not be published in the future.
 
 ## Usage
 
